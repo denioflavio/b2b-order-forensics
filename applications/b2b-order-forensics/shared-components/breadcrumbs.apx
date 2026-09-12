@@ -1,0 +1,80 @@
+breadcrumb breadcrumb (
+    name: Breadcrumb
+
+    entry home (
+        name: Home
+        pageNumber: 1
+        execution {
+            sequence: 11
+        }
+        link {
+            target: {
+                page: 1
+            }
+        }
+    )
+
+    entry my-orders (
+        name: My Orders
+        pageNumber: 10
+        execution {
+            sequence: 20
+        }
+        appearance {
+            parentEntry: @home
+        }
+        link {
+            target: {
+                page: 10
+            }
+        }
+    )
+
+    entry products-cart (
+        name: Products & Cart
+        pageNumber: 20
+        execution {
+            sequence: 30
+        }
+        appearance {
+            parentEntry: @home
+        }
+        link {
+            target: {
+                page: 20
+            }
+        }
+    )
+
+    entry checkout (
+        name: Checkout
+        pageNumber: 30
+        execution {
+            sequence: 40
+        }
+        appearance {
+            parentEntry: @products-cart
+        }
+        link {
+            target: {
+                page: 30
+            }
+        }
+    )
+
+    entry order-details (
+        name: Order Details
+        pageNumber: 50
+        execution {
+            sequence: 60
+        }
+        appearance {
+            parentEntry: @my-orders
+        }
+        link {
+            target: {
+                page: 50
+            }
+        }
+    )
+)

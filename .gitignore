@@ -1,0 +1,6 @@
+.DS_Store
+.env
+*.log
+*.tok
+.local-backups/
+verification/

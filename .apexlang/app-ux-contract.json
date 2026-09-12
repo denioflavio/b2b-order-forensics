@@ -1,0 +1,383 @@
+{
+  "sourceEvidence": {
+    "requirements": [
+      "FR-001",
+      "FR-002",
+      "FR-003",
+      "FR-004",
+      "FR-005",
+      "FR-006",
+      "DW-001"
+    ],
+    "databaseObjects": [
+      {
+        "owner": "APP_DEMO",
+        "name": "BF_CUSTOMER",
+        "status": "live-verified-2026-09-12",
+        "kind": "table"
+      },
+      {
+        "owner": "APP_DEMO",
+        "name": "BF_PRODUCT",
+        "status": "live-verified-2026-09-12",
+        "kind": "table"
+      },
+      {
+        "owner": "APP_DEMO",
+        "name": "BF_ORDER",
+        "status": "live-verified-2026-09-12",
+        "kind": "table"
+      },
+      {
+        "owner": "APP_DEMO",
+        "name": "BF_ORDER_ITEM",
+        "status": "live-verified-2026-09-12",
+        "kind": "table"
+      },
+      {
+        "owner": "APP_DEMO",
+        "name": "BF_ORDER_INTENT",
+        "status": "live-verified-2026-09-12",
+        "kind": "table"
+      },
+      {
+        "owner": "APP_DEMO",
+        "name": "BF_CART_PKG",
+        "status": "live-verified-2026-09-12",
+        "kind": "package"
+      },
+      {
+        "owner": "APP_DEMO",
+        "name": "BF_ORDER_PKG",
+        "status": "live-verified-2026-09-12",
+        "kind": "package"
+      }
+    ],
+    "runtime": {
+      "applicationId": 107,
+      "workspace": "APEXFROMTHEFIELD",
+      "parsingSchema": "APP_DEMO",
+      "connection": "LAB_INSTALL"
+    },
+    "customPresentation": "User explicitly requests custom HTML/CSS/JS buyer portal. Native Dynamic Content renders escaped business data; no dashboard metrics or investigation widgets."
+  },
+  "pageInventory": [
+    {
+      "page": 0,
+      "name": "Global Page",
+      "type": "global",
+      "derivedWorkflowId": "DW-001"
+    },
+    {
+      "page": 1,
+      "name": "Home",
+      "type": "buyer-portal",
+      "requirementId": "FR-001",
+      "regions": [
+        {
+          "order": 10,
+          "name": "Home",
+          "component": "breadcrumb",
+          "sourceShape": "none"
+        },
+        {
+          "order": 20,
+          "name": "Welcome",
+          "component": "dynamicContent",
+          "sourceShape": "sql"
+        }
+      ]
+    },
+    {
+      "page": 10,
+      "name": "My Orders",
+      "type": "buyer-portal",
+      "requirementId": "FR-002",
+      "regions": [
+        {
+          "order": 10,
+          "name": "My Orders",
+          "component": "breadcrumb",
+          "sourceShape": "none"
+        },
+        {
+          "order": 20,
+          "name": "Your Orders",
+          "component": "dynamicContent",
+          "sourceShape": "sql"
+        }
+      ]
+    },
+    {
+      "page": 20,
+      "name": "Products & Cart",
+      "type": "buyer-portal",
+      "requirementId": "FR-003",
+      "regions": [
+        {
+          "order": 10,
+          "name": "Products & Cart",
+          "component": "breadcrumb",
+          "sourceShape": "none"
+        },
+        {
+          "order": 20,
+          "name": "Products and Cart",
+          "component": "dynamicContent",
+          "sourceShape": "sql"
+        }
+      ]
+    },
+    {
+      "page": 30,
+      "name": "Checkout",
+      "type": "buyer-portal",
+      "requirementId": "FR-004",
+      "regions": [
+        {
+          "order": 10,
+          "name": "Checkout",
+          "component": "breadcrumb",
+          "sourceShape": "none"
+        },
+        {
+          "order": 20,
+          "name": "Review Your Order",
+          "component": "dynamicContent",
+          "sourceShape": "sql"
+        }
+      ]
+    },
+    {
+      "page": 50,
+      "name": "Order Details",
+      "type": "buyer-portal",
+      "requirementId": "FR-005",
+      "regions": [
+        {
+          "order": 10,
+          "name": "Order Details",
+          "component": "breadcrumb",
+          "sourceShape": "none"
+        },
+        {
+          "order": 20,
+          "name": "Your Purchase",
+          "component": "dynamicContent",
+          "sourceShape": "sql"
+        }
+      ]
+    },
+    {
+      "page": 9999,
+      "name": "Login",
+      "type": "login",
+      "derivedWorkflowId": "DW-001"
+    }
+  ],
+  "compositionPlan": {
+    "application": {
+      "id": 107,
+      "alias": "B2B_FORENSICS",
+      "workspace": "APEXFROMTHEFIELD",
+      "parsingSchema": "APP_DEMO"
+    },
+    "navigationEntries": [
+      {
+        "page": 1,
+        "label": "Home",
+        "icon": "fa-home"
+      },
+      {
+        "page": 20,
+        "label": "Products & Cart",
+        "icon": "fa-shopping-cart"
+      },
+      {
+        "page": 10,
+        "label": "My Orders",
+        "icon": "fa-package"
+      }
+    ],
+    "breadcrumbs": [
+      {
+        "page": 1,
+        "entry": "Home",
+        "root": true
+      },
+      {
+        "page": 10,
+        "entry": "My Orders",
+        "parentPage": 1
+      },
+      {
+        "page": 20,
+        "entry": "Products & Cart",
+        "parentPage": 1
+      },
+      {
+        "page": 30,
+        "entry": "Checkout",
+        "parentPage": 20
+      },
+      {
+        "page": 50,
+        "entry": "Order Details",
+        "parentPage": 10
+      }
+    ],
+    "sharedComponents": [
+      "Oracle APEX Accounts",
+      "Navigation Menu",
+      "Navigation Bar",
+      "Breadcrumb"
+    ],
+    "layoutRecipes": [],
+    "modalTargets": [],
+    "managementHubEntries": [],
+    "pageActions": []
+  },
+  "richUiPatternPlan": [
+    {
+      "pattern": "dynamicContent",
+      "page": 20,
+      "region": "Products and Cart",
+      "evidence": "FR-003 explicit custom buyer UI; real BF_PRODUCT metadata and session cart. No static fake data."
+    }
+  ],
+  "lovPlan": {
+    "static": [],
+    "dynamic": [],
+    "explanation": "Category filters derive from eight visible products; no APEX item LOV required. Remove legacy customer/scenario LOVs."
+  },
+  "behaviorPlan": {
+    "modalTargets": [],
+    "pageActions": [],
+    "parentChildContext": [],
+    "reportLinks": [],
+    "validations": [
+      {
+        "page": 20,
+        "rule": "Authenticated session; valid active product; integer quantity 0..99; zero removes; server prices only."
+      },
+      {
+        "page": 30,
+        "rule": "Order and intent from session collection; no buyer-supplied ID; valid checkout state."
+      },
+      {
+        "page": 50,
+        "rule": "P50_ORDER_ID is checksum-protected; read-only detail renderer checks ACME and APP_USER. Missing/inaccessible order shows Order not found. This is not a required form input."
+      }
+    ],
+    "formContext": [
+      {
+        "page": 50,
+        "item": "P50_ORDER_ID",
+        "visible": false,
+        "editable": false,
+        "source": "server-generated checksum link"
+      }
+    ],
+    "formDefaults": [],
+    "processes": [
+      {
+        "page": 20,
+        "name": "Initialize Cart",
+        "intent": "beforeHeader BF_CART_PKG.initialize"
+      },
+      {
+        "page": 20,
+        "name": "SHOP_CART",
+        "intent": "onDemand JSON add/set/read with refreshed totals"
+      },
+      {
+        "page": 20,
+        "name": "Begin Checkout",
+        "intent": "processing CHECKOUT; create durable order and redirect30"
+      },
+      {
+        "page": 30,
+        "name": "Place Order",
+        "intent": "processing PLACE_ORDER or RETRY_ORDER; native real exceptions; controlled second POST; redirect50 after completion"
+      }
+    ],
+    "refreshDependencies": [
+      {
+        "page": 20,
+        "event": "cart AJAX response",
+        "affectedRegion": "Products and Cart",
+        "behavior": "Replace only cart rows/totals; preserve product search and keyboard focus"
+      }
+    ],
+    "security": [
+      {
+        "pages": [
+          1,
+          10,
+          20,
+          30,
+          50
+        ],
+        "authentication": "required",
+        "authorization": "mustNotBePublicUser"
+      }
+    ],
+    "guidance": [
+      {
+        "page": 30,
+        "rule": "Commercial reference before processing; no internal account or error selector."
+      },
+      {
+        "page": 50,
+        "rule": "Business-only status/items/total; warn about two orders without revealing internal trigger."
+      }
+    ],
+    "customRenderedLinks": [
+      {
+        "sourcePage": 10,
+        "sourceRegion": "Your Orders",
+        "targetPage": 50,
+        "targetItem": "P50_ORDER_ID",
+        "keyColumn": "ORDER_ID",
+        "implementation": "APEX_PAGE.GET_URL with session checksum, rendered in PL/SQL Dynamic Content; not a native report-column link."
+      }
+    ]
+  },
+  "testPlan": [
+    {
+      "id": "T-001",
+      "requirement": "FR-001",
+      "expected": "Home links and responsive buyer layout"
+    },
+    {
+      "id": "T-002",
+      "requirement": "FR-002",
+      "expected": "Only current buyer orders and checksum detail links"
+    },
+    {
+      "id": "T-003",
+      "requirement": "FR-003",
+      "expected": "Search/category/add/inline quantity/removal/keyboard/busy/empty states; authoritative AJAX totals"
+    },
+    {
+      "id": "T-004",
+      "requirement": "FR-004",
+      "expected": "Normal checkout one POST; controlled retry second POST; real exception from installed package; no refresh resubmit"
+    },
+    {
+      "id": "T-005",
+      "requirement": "FR-005",
+      "expected": "Related two orders and business warning; no technical metadata"
+    },
+    {
+      "id": "T-006",
+      "requirement": "FR-006",
+      "expected": "Pages40/60/70 absent and inaccessible after import"
+    },
+    {
+      "id": "T-007",
+      "requirement": "DW-001",
+      "expected": "Strict, grammar, UX, references, compiler and live check; approval before import"
+    }
+  ]
+}
