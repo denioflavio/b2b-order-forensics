@@ -1,0 +1,247 @@
+page 30 (
+    name: Checkout
+    alias: CHECKOUT
+    title: Checkout
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        warnOnUnsavedChanges: false
+    }
+    security {
+        authentication: required
+        authorizationScheme: mustNotBePublicUser
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+    css {
+        inline:
+            ```css
+            /* Buyer portal: scoped presentation, native APEX authentication and errors. */
+            .t-Body-content { background:#f5f6f8; }
+            .shop-region { background:transparent; border:0; box-shadow:none; }
+            .shop-region > .t-Region-header { display:none; }
+            .shop-region > .t-Region-bodyWrap > .t-Region-body { padding:0; }
+            .shop-region .t-Region-buttons { border:0; background:transparent; }
+            .bf-shop { --ink:#202c3b; --muted:#647185; --line:#e3e8ef; --accent:#295bd6; color:var(--ink); max-width:1320px; margin:0 auto; font-size:15px; line-height:1.55; }
+            .bf-shop * { box-sizing:border-box; }
+            .bf-shop h1,.bf-shop h2,.bf-shop h3,.bf-shop p { margin:0; }
+            .bf-shop h1 { font-size:clamp(30px,4vw,52px); line-height:1.12; letter-spacing:-1.6px; font-weight:750; }
+            .bf-shop h2 { font-size:22px; letter-spacing:-.5px; }
+            .bf-shop h3 { font-size:18px; }
+            .bf-shop a { color:var(--accent); }
+            .bf-shop button,.bf-shop input,.bf-shop select { font:inherit; }
+            .bf-shop :focus-visible { outline:3px solid #86a9ff; outline-offset:3px; }
+            .bf-muted { color:var(--muted); }
+            .bf-eyebrow { font-size:12px; font-weight:750; letter-spacing:1.6px; text-transform:uppercase; color:#536a8a; margin-bottom:14px!important; }
+            .bf-head { margin:12px 0 28px; }
+            .bf-head p { margin-top:12px; color:var(--muted); max-width:650px; }
+            .bf-hero { display:grid; grid-template-columns:1.2fr 1fr; align-items:center; gap:36px; padding:clamp(28px,5vw,68px); border:1px solid #e0e7ef; border-radius:26px; background:linear-gradient(120deg,#eef3fe,#f8fafb 65%,#e6f1ee); min-height:410px; }
+            .bf-hero p.bf-lead { max-width:460px; margin-top:22px; color:#59677a; font-size:17px; }
+            .bf-hero .bf-art { height:280px; transform:rotate(-4deg); }
+            .bf-actions { display:flex; align-items:center; flex-wrap:wrap; gap:14px; margin-top:26px; }
+            .bf-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border:1px solid var(--line); border-radius:10px; padding:11px 17px; min-height:44px; background:white; color:var(--ink)!important; text-decoration:none!important; font-weight:650; cursor:pointer; transition:background .15s,transform .15s; }
+            .bf-btn:hover { background:#f0f4fc; }
+            .bf-btn-primary { background:var(--accent); border-color:var(--accent); color:white!important; }
+            .bf-btn-primary:hover { background:#1e47af; }
+            .bf-shop button:disabled { opacity:.55; cursor:wait; }
+            .bf-benefits { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin:28px 0; }
+            .bf-benefits article { padding:24px; background:white; border:1px solid var(--line); border-radius:18px; }
+            .bf-benefits p { color:var(--muted); margin-top:8px; }
+            .bf-toolbar { display:flex; gap:12px; margin-bottom:22px; }
+            .bf-search,.bf-filter { border:1px solid #ccd5e1; border-radius:10px; min-height:46px; background:#fff; padding:10px 14px; color:var(--ink); }
+            .bf-search { width:100%; }
+            .bf-toolbar label:first-child { flex:1; }
+            .bf-layout { display:grid; grid-template-columns:minmax(0,1fr) 330px; gap:26px; align-items:start; }
+            .bf-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+            .bf-product { background:white; border:1px solid var(--line); border-radius:18px; overflow:hidden; display:flex; flex-direction:column; }
+            .bf-product[hidden] { display:none; }
+            .bf-art { display:block; background-size:contain; background-position:center; background-repeat:no-repeat; height:178px; background-color:#f2f5fa; }
+            .bf-product-body { padding:20px; display:flex; flex:1; flex-direction:column; gap:10px; }
+            .bf-brand { color:#60718a; font-size:12px; text-transform:uppercase; letter-spacing:1.3px; font-weight:700; }
+            .bf-description { color:var(--muted); font-size:14px; flex:1; }
+            .bf-product-bottom { display:flex; justify-content:space-between; gap:10px; align-items:center; margin-top:10px; }
+            .bf-price { font-size:18px; font-weight:750; white-space:nowrap; }
+            .bf-cart { position:sticky; top:90px; border:1px solid var(--line); border-radius:18px; background:#fff; padding:22px; }
+            .bf-cart header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+            .bf-cart-count { background:#eff3fb; color:#3d5b84; padding:3px 10px; border-radius:20px; font-size:13px; }
+            .bf-cart-line { display:grid; grid-template-columns:1fr auto; gap:10px; padding:16px 0; border-bottom:1px solid var(--line); }
+            .bf-cart-line h3 { font-size:14px; }
+            .bf-cart-line small { color:var(--muted); }
+            .bf-line-controls { display:flex; align-items:center; gap:10px; grid-column:1/-1; }
+            .bf-qty { width:70px; border:1px solid #ccd5e1; border-radius:8px; padding:6px 8px; min-height:40px; }
+            .bf-trash { display:inline-flex; align-items:center; justify-content:center; min-width:40px; min-height:40px; border:0; border-radius:8px; color:#6b7788; background:transparent; cursor:pointer; margin-left:auto; }
+            .bf-trash:hover { color:#a72a39; background:#fff0f2; }
+            .bf-total { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:22px 0; font-weight:700; }
+            .bf-total strong { font-size:24px; }
+            .bf-cart .bf-btn { width:100%; }
+            .bf-note { margin-top:14px!important; font-size:12px; color:var(--muted); }
+            .bf-empty { padding:36px 12px; text-align:center; color:var(--muted); }
+            .bf-panel { background:white; border:1px solid var(--line); border-radius:18px; padding:26px; margin-bottom:20px; }
+            .bf-review { max-width:820px; margin:0 auto; }
+            .bf-order-list { display:grid; gap:14px; }
+            .bf-order-row { display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between; background:#fff; border:1px solid var(--line); border-radius:16px; padding:24px; }
+            .bf-order-row h2 { font-size:19px; }
+            .bf-status { display:inline-block; border-radius:20px; padding:5px 12px; font-size:12px; font-weight:700; background:#edf1f7; color:#4f627b; }
+            .bf-status-COMPLETED { color:#26705b; background:#e8f5ef; }
+            .bf-status-ERROR { color:#9b4c32; background:#fff0e8; }
+            .bf-warning { background:#fff6df; border:1px solid #ecd599; border-radius:12px; padding:18px; margin:20px 0; color:#775513; }
+            .bf-review-line { display:flex; gap:20px; justify-content:space-between; padding:18px 0; border-bottom:1px solid var(--line); }
+            .bf-review-line span { display:block; color:var(--muted); font-size:13px; margin-top:4px; }
+            .bf-sr { position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+            .bf-spinner { width:28px; height:28px; border:3px solid #dce4f0; border-top-color:#295bd6; border-radius:50%; animation:bf-spin .8s linear infinite; margin:12px auto; }
+            @keyframes bf-spin { to { transform:rotate(360deg); } }
+            @media(min-width:1500px) { .bf-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+            @media(max-width:1000px) { .bf-layout { grid-template-columns:1fr; } .bf-cart { position:static; } }
+            @media(max-width:640px) { .bf-grid,.bf-hero,.bf-benefits { grid-template-columns:1fr; } .bf-hero { gap:12px; padding:26px; } .bf-hero .bf-art { height:180px; } .bf-toolbar { flex-direction:column; } .bf-filter { width:100%; } .bf-panel { padding:20px; } .bf-shop h1 { letter-spacing:-1px; } }
+            @media(prefers-reduced-motion:reduce) { .bf-spinner { animation:none; } .bf-btn { transition:none; } }
+            .bf-art-desktop { background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%20role%3D%22img%22%20aria-label%3D%22desktop%20illustration%22%3E%0A%3Cdefs%3E%3ClinearGradient%20id%3D%22screen%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23a5d9eb%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237794d1%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%0A%3Crect%20width%3D%22320%22%20height%3D%22200%22%20rx%3D%2220%22%20fill%3D%22%23f0f5f9%22%2F%3E%0A%3Cellipse%20cx%3D%22160%22%20cy%3D%22178%22%20rx%3D%22106%22%20ry%3D%228%22%20fill%3D%22%23dce6ed%22%2F%3E%0A%3Crect%20x%3D%2277%22%20y%3D%2255%22%20width%3D%22166%22%20height%3D%2298%22%20rx%3D%2217%22%20fill%3D%22%23d4dfe7%22%2F%3E%3Cpath%20d%3D%22M77%20125h166v12a16%2016%200%200%201-16%2016H93a16%2016%200%200%201-16-16z%22%20fill%3D%22%23aec0cf%22%2F%3E%3Ccircle%20cx%3D%22217%22%20cy%3D%22139%22%20r%3D%224%22%20fill%3D%22%234b8390%22%2F%3E%3Cpath%20d%3D%22M98%20139h38m8%200h12%22%20stroke%3D%22%23687f94%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E"); }
+            .bf-art-dock { background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%20role%3D%22img%22%20aria-label%3D%22dock%20illustration%22%3E%0A%3Cdefs%3E%3ClinearGradient%20id%3D%22screen%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23a5d9eb%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237794d1%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%0A%3Crect%20width%3D%22320%22%20height%3D%22200%22%20rx%3D%2220%22%20fill%3D%22%23f0f5f9%22%2F%3E%0A%3Cellipse%20cx%3D%22160%22%20cy%3D%22178%22%20rx%3D%22106%22%20ry%3D%228%22%20fill%3D%22%23dce6ed%22%2F%3E%0A%3Cpath%20d%3D%22M229%20108h31q20%200%2020-25V59%22%20fill%3D%22none%22%20stroke%3D%22%23506b82%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%2F%3E%3Crect%20x%3D%2265%22%20y%3D%2274%22%20width%3D%22176%22%20height%3D%2271%22%20rx%3D%2214%22%20fill%3D%22%23c1d1de%22%2F%3E%3Cpath%20d%3D%22M65%20121h176v10a14%2014%200%200%201-14%2014H79a14%2014%200%200%201-14-14z%22%20fill%3D%22%2396aebf%22%2F%3E%3Cpath%20d%3D%22M86%20133h22m11%200h22m12%200h31m13%200h23%22%20stroke%3D%22%2346657c%22%20stroke-width%3D%226%22%2F%3E%0A%3C%2Fsvg%3E"); }
+            .bf-art-headset { background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%20role%3D%22img%22%20aria-label%3D%22headset%20illustration%22%3E%0A%3Cdefs%3E%3ClinearGradient%20id%3D%22screen%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23a5d9eb%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237794d1%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%0A%3Crect%20width%3D%22320%22%20height%3D%22200%22%20rx%3D%2220%22%20fill%3D%22%23f0f5f9%22%2F%3E%0A%3Cellipse%20cx%3D%22160%22%20cy%3D%22178%22%20rx%3D%22106%22%20ry%3D%228%22%20fill%3D%22%23dce6ed%22%2F%3E%0A%3Cpath%20d%3D%22M99%20117V91a61%2061%200%200%201%20122%200v26%22%20fill%3D%22none%22%20stroke%3D%22%23324d63%22%20stroke-width%3D%2217%22%2F%3E%3Crect%20x%3D%2283%22%20y%3D%2293%22%20width%3D%2238%22%20height%3D%2262%22%20rx%3D%2216%22%20fill%3D%22%23afc9d6%22%2F%3E%3Crect%20x%3D%22199%22%20y%3D%2293%22%20width%3D%2238%22%20height%3D%2262%22%20rx%3D%2216%22%20fill%3D%22%23afc9d6%22%2F%3E%3Cpath%20d%3D%22M218%20145q0%2029-52%2026%22%20fill%3D%22none%22%20stroke%3D%22%23324d63%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%2F%3E%3Crect%20x%3D%22150%22%20y%3D%22166%22%20width%3D%2228%22%20height%3D%2211%22%20rx%3D%225%22%20fill%3D%22%23324d63%22%2F%3E%0A%3C%2Fsvg%3E"); }
+            .bf-art-keyboard { background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%20role%3D%22img%22%20aria-label%3D%22keyboard%20illustration%22%3E%0A%3Cdefs%3E%3ClinearGradient%20id%3D%22screen%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23a5d9eb%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237794d1%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%0A%3Crect%20width%3D%22320%22%20height%3D%22200%22%20rx%3D%2220%22%20fill%3D%22%23f0f5f9%22%2F%3E%0A%3Cellipse%20cx%3D%22160%22%20cy%3D%22178%22%20rx%3D%22106%22%20ry%3D%228%22%20fill%3D%22%23dce6ed%22%2F%3E%0A%3Cpath%20d%3D%22M60%2059h200l20%2080H40z%22%20fill%3D%22%23c7d5e1%22%2F%3E%3Cpath%20d%3D%22M40%20139h240v10H40z%22%20fill%3D%22%2393a9ba%22%2F%3E%3Cpath%20d%3D%22M70%2076h180M64%2094h192M60%20112h66m68%200h66M137%20112h46%22%20stroke%3D%22%23718ba0%22%20stroke-width%3D%2210%22%20stroke-dasharray%3D%2211%207%22%2F%3E%3Cpath%20d%3D%22M124%20130h72%22%20stroke%3D%22%23eaf1f7%22%20stroke-width%3D%229%22%2F%3E%0A%3C%2Fsvg%3E"); }
+            .bf-art-laptop { background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%20role%3D%22img%22%20aria-label%3D%22laptop%20illustration%22%3E%0A%3Cdefs%3E%3ClinearGradient%20id%3D%22screen%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23a5d9eb%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237794d1%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%0A%3Crect%20width%3D%22320%22%20height%3D%22200%22%20rx%3D%2220%22%20fill%3D%22%23f0f5f9%22%2F%3E%0A%3Cellipse%20cx%3D%22160%22%20cy%3D%22178%22%20rx%3D%22106%22%20ry%3D%228%22%20fill%3D%22%23dce6ed%22%2F%3E%0A%3Crect%20x%3D%2268%22%20y%3D%2233%22%20width%3D%22184%22%20height%3D%22116%22%20rx%3D%229%22%20fill%3D%22%23263b51%22%2F%3E%3Crect%20x%3D%2276%22%20y%3D%2241%22%20width%3D%22168%22%20height%3D%2299%22%20rx%3D%224%22%20fill%3D%22url(%23screen)%22%2F%3E%3Cpath%20d%3D%22M48%20150h224l-13%2015H61z%22%20fill%3D%22%23c1ceda%22%2F%3E%3Cpath%20d%3D%22M137%20150h46l-4%205h-38z%22%20fill%3D%22%238da2b5%22%2F%3E%0A%3C%2Fsvg%3E"); }
+            .bf-art-monitor { background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%20role%3D%22img%22%20aria-label%3D%22monitor%20illustration%22%3E%0A%3Cdefs%3E%3ClinearGradient%20id%3D%22screen%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23a5d9eb%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237794d1%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%0A%3Crect%20width%3D%22320%22%20height%3D%22200%22%20rx%3D%2220%22%20fill%3D%22%23f0f5f9%22%2F%3E%0A%3Cellipse%20cx%3D%22160%22%20cy%3D%22178%22%20rx%3D%22106%22%20ry%3D%228%22%20fill%3D%22%23dce6ed%22%2F%3E%0A%3Crect%20x%3D%2253%22%20y%3D%2226%22%20width%3D%22214%22%20height%3D%22131%22%20rx%3D%228%22%20fill%3D%22%23263b51%22%2F%3E%3Crect%20x%3D%2261%22%20y%3D%2234%22%20width%3D%22198%22%20height%3D%22111%22%20rx%3D%222%22%20fill%3D%22url(%23screen)%22%2F%3E%3Cpath%20d%3D%22M149%20157v15h-37v8h96v-8h-37v-15%22%20fill%3D%22%239eafc0%22%2F%3E%0A%3C%2Fsvg%3E"); }
+            .bf-art-mouse { background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%20role%3D%22img%22%20aria-label%3D%22mouse%20illustration%22%3E%0A%3Cdefs%3E%3ClinearGradient%20id%3D%22screen%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23a5d9eb%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237794d1%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%0A%3Crect%20width%3D%22320%22%20height%3D%22200%22%20rx%3D%2220%22%20fill%3D%22%23f0f5f9%22%2F%3E%0A%3Cellipse%20cx%3D%22160%22%20cy%3D%22178%22%20rx%3D%22106%22%20ry%3D%228%22%20fill%3D%22%23dce6ed%22%2F%3E%0A%3Cpath%20d%3D%22M114%2073c0-60%2092-60%2092%200v59c0%2057-92%2057-92%200z%22%20fill%3D%22%23d2dfe8%22%2F%3E%3Cpath%20d%3D%22M160%2029v61m-46%200h92%22%20stroke%3D%22%2394aabd%22%20stroke-width%3D%222%22%2F%3E%3Crect%20x%3D%22155%22%20y%3D%2248%22%20width%3D%2210%22%20height%3D%2228%22%20rx%3D%225%22%20fill%3D%22%23536d83%22%2F%3E%0A%3C%2Fsvg%3E"); }
+            .bf-art-webcam { background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%20role%3D%22img%22%20aria-label%3D%22webcam%20illustration%22%3E%0A%3Cdefs%3E%3ClinearGradient%20id%3D%22screen%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23a5d9eb%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237794d1%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%0A%3Crect%20width%3D%22320%22%20height%3D%22200%22%20rx%3D%2220%22%20fill%3D%22%23f0f5f9%22%2F%3E%0A%3Cellipse%20cx%3D%22160%22%20cy%3D%22178%22%20rx%3D%22106%22%20ry%3D%228%22%20fill%3D%22%23dce6ed%22%2F%3E%0A%3Cpath%20d%3D%22M147%20119v26h-37v12h100v-12h-37v-26%22%20fill%3D%22%23809aac%22%2F%3E%3Crect%20x%3D%2274%22%20y%3D%2263%22%20width%3D%22172%22%20height%3D%2267%22%20rx%3D%2223%22%20fill%3D%22%23344d61%22%2F%3E%3Ccircle%20cx%3D%22160%22%20cy%3D%2296%22%20r%3D%2228%22%20fill%3D%22%237798ac%22%2F%3E%3Ccircle%20cx%3D%22160%22%20cy%3D%2296%22%20r%3D%2218%22%20fill%3D%22%23162c42%22%2F%3E%3Ccircle%20cx%3D%22167%22%20cy%3D%2289%22%20r%3D%225%22%20fill%3D%22%23b6e5e6%22%2F%3E%3Ccircle%20cx%3D%22222%22%20cy%3D%2297%22%20r%3D%223%22%20fill%3D%22%2379dec4%22%2F%3E%0A%3C%2Fsvg%3E"); }
+            ```
+    }
+    javaScript {
+        executeWhenPageLoads:
+            ```javascript
+            (function () {
+              const actions = document.getElementById("bf-checkout-actions");
+              const button = document.getElementById("PLACE_ORDER");
+              if (button) {
+                if (actions) { actions.append(button); button.classList.add("bf-btn","bf-btn-primary"); }
+                else { button.hidden = true; button.style.display = "none"; }
+              }
+              if (document.getElementById("bf-finishing")) {
+                // A second HTTP POST, never a mutation during GET/render.
+                apex.submit({request:"RETRY_ORDER",showWait:true});
+              }
+            }());
+            ```
+    }
+    region breadcrumb (
+        name: Checkout
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 10
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: #DEFAULT#
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+    region shop-content (
+        name: Review Your Order
+        type: dynamicContent
+        source {
+            plsqlFunctionBody:
+                ```plsql
+                declare
+                 l_html clob;
+                 l_order number:=bf_cart_pkg.current_order;
+                 l_state varchar2(30):=bf_cart_pkg.checkout_state;
+                 l_total number;
+
+                  function esc(p_text varchar2) return varchar2 is
+                  begin return apex_escape.html(p_text); end;
+                  function url(p_page number,p_order number default null) return varchar2 is
+                  begin
+                    return apex_escape.html_attribute(apex_page.get_url(p_page=>p_page, p_clear_cache=>case when p_page=50 then '50' end, p_items=>case when p_order is not null then 'P50_ORDER_ID' end,p_values=>to_char(p_order)));
+                  end;
+                  function money(p_value number) return varchar2 is
+                  begin return 'R$ '||to_char(p_value,'FM999G999G990D00','NLS_NUMERIC_CHARACTERS=''.,'''); end;
+                  function status_label(p_status varchar2) return varchar2 is
+                  begin return case p_status when 'COMPLETED' then 'Confirmed' when 'ERROR' then 'Needs attention'
+                    when 'PROCESSING' then 'Processing' else 'Awaiting confirmation' end; end;
+
+                begin
+                 if l_order is null then return '<div class="bf-shop bf-review"><div class="bf-panel bf-empty"><h1>Your cart is waiting.</h1><p>Choose your products before checking out.</p><a class="bf-btn" href="'||url(20)||'">Browse products</a></div></div>'; end if;
+                 select total_amount into l_total from bf_order where order_id=l_order and customer_id=bf_order_pkg.customer_id and created_by=:APP_USER and apex_session_id=:APP_SESSION;
+                 l_html:='<div class="bf-shop bf-review"><header class="bf-head"><p class="bf-eyebrow">ONE LAST LOOK</p><h1>Review your order.</h1><p>Order #'||l_order||' &middot; ACME Workspace</p></header><section class="bf-panel" aria-label="Order summary">';
+                 for i in (select product_name,quantity,unit_price,line_total from bf_order_item where order_id=l_order order by line_number) loop
+                  l_html:=l_html||'<div class="bf-review-line"><div><strong>'||esc(i.product_name)||'</strong><span>Quantity '||i.quantity||' &middot; '||money(i.unit_price)||' each</span></div><strong>'||money(i.line_total)||'</strong></div>';
+                 end loop;
+                 l_html:=l_html||'<div class="bf-total"><span>Order total</span><strong>'||money(l_total)||'</strong></div><p class="bf-note">Delivery to your company address on file.</p>';
+                 if l_state='WAIT_RETRY' then
+                  l_html:=l_html||'<div id="bf-finishing" role="status"><div class="bf-spinner" aria-hidden="true"></div><p>Finishing your purchase. Please keep this page open.</p></div>';
+                 elsif l_state in ('READY','RETRY_READY') then
+                  l_html:=l_html||'<div id="bf-checkout-actions" class="bf-actions"></div><p class="bf-note">Place your order when you are ready. Keep this reference if you need to contact support.</p>';
+                 else
+                  l_html:=l_html||'<p>This checkout has already been processed. Check your order before placing another purchase.</p><div class="bf-actions"><a class="bf-btn" href="'||url(50,l_order)||'">View order #'||l_order||'</a><a class="bf-btn" href="'||url(10)||'">My orders</a></div>';
+                 end if;
+                 return l_html||'</section></div>';
+                exception when no_data_found then
+                 return '<div class="bf-shop bf-panel">This order is not available. Return to My Orders.</div>';
+                end;
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: #DEFAULT#
+            cssClasses: shop-region
+        }
+    )
+    button place-order (
+        buttonName: PLACE_ORDER
+        label: Place order
+        advanced {
+            htmlDomId: PLACE_ORDER
+        }
+        layout {
+            sequence: 10
+            region: @shop-content
+            slot: create
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+        }
+        behavior {
+            action: submitPage
+            warnOnUnsavedChanges: doNotCheck
+        }
+    )
+    process place-order (
+        name: Place Order
+        type: executeCode
+        source {
+            plsqlCode:
+                ```plsql
+                begin
+                 if v('REQUEST')='RETRY_ORDER' then
+                  bf_cart_pkg.prepare_retry;
+                 elsif v('REQUEST')<>'PLACE_ORDER' or v('REQUEST') is null then
+                  return;
+                 end if;
+                 bf_cart_pkg.place_order;
+                 if bf_cart_pkg.checkout_state='WAIT_RETRY' then
+                  apex_util.redirect_url(apex_page.get_url(p_page=>30));
+                 else
+                  apex_util.redirect_url(apex_page.get_url(p_page=>50,p_clear_cache=>'50',
+                    p_items=>'P50_ORDER_ID',p_values=>to_char(bf_cart_pkg.current_order)));
+                 end if;
+                end;
+                ```
+        }
+        execution {
+            sequence: 10
+            point: processing
+        }
+    )
+)

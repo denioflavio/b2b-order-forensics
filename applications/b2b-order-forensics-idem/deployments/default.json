@@ -1,0 +1,11 @@
+{
+  "workspace": {
+    "name": "APEXFROMTHEFIELD"
+  },
+  "app": {
+    "id": 101,
+    "databaseSession": {
+      "parsingSchema": "APP_DEMO_IDEM"
+    }
+  }
+}

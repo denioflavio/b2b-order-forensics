@@ -25,7 +25,7 @@ The application contains deliberate defects. It is not a production reference ar
 2. **One Click, Two Orders** — distinguish repeated purchase intention from merely similar successful orders.
 3. **The Missing Log Proves Nothing** — evaluate competing explanations when evidence is incomplete.
 
-The articles remain editorial work in progress and are not included in the source distribution. The first awaits the author's recorded VS Code investigation; no timing benchmark or independent discovery is claimed.
+The articles remain editorial work in progress and are not included in the source distribution. The second is being prepared with a separately tested idempotency correction; no timing benchmark or independent discovery is claimed.
 
 ## Installation and security
 
@@ -42,3 +42,7 @@ The source was deployed in the author's lab and used for recorded browser purcha
 The checkout can retain its submit button after failure. Logging can fail silently. Good instrumentation does not imply good error handling, and absence of a log is not proof of absence of execution. See the guide for other limitations.
 
 Distributed under the MIT license. No credentials, wallet, existing orders, raw logs or private editorial material are included.
+
+## Corrected checkout variant
+
+See [the isolated idempotent variant](variants/idempotent/README.md) for the database invariant, replay contract, installation and sequential/concurrent tests. The original database scripts retain the defect for investigation.
