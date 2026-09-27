@@ -1,9 +1,9 @@
 {
   "description": "Sanitized experimental source snapshot; no private history or runtime evidence.",
   "files": {
-    "README.md": "d53f1d540ebcf604d763e943a744be3c432568a9ffed5d046af83a060847b30d",
+    "README.md": "a4d3fe3bb743345688139edff00806d09e816e20ee2c9d725b2a503ae1ac0b82",
     "LICENSE": "34b8ecc29152a433bee0d47a849db095a9fca5f14e2b2cba8412312a370468b2",
-    "docs/public-lab-guide.md": "a73dd559901d46108e661acca1148d6e8c855cd057ab53330afde26eb9d0143c",
+    "docs/public-lab-guide.md": "14ecd7a62ba4f12a1ea32a632c1af0ebf2c59bf1ab2546855d15d507bd496dd3",
     "database/install.sql": "c440525576ae5f7a95738c9a4a161085d185a31fd69b2ad3f24a60acf1994fe0",
     "database/10_tables.sql": "f4a040209a7cfff747aebba2670ec3f3add7a47c0d959de097c69d672b8edc7e",
     "database/20_views.sql": "5e8118e96f17deaec85da9cc60d2e64e38b803a85050f699e670d58f4a776e4f",

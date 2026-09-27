@@ -4,7 +4,7 @@ This is source for an intentionally defective demonstration, not a production ap
 
 ## Prerequisites and installation boundaries
 
-The author's deployment used Oracle AI Database 26ai, APEX 26.1.4 and SQLcl 26.1.2 with Java 21. APEXLang source uses metadata version 26.1.0+3102. Other runtime versions have not been certified. APEXLang tooling is an external prerequisite, not vendored here. Database DDL and PL/SQL can be read independently of that tooling.
+The author's deployment used Oracle AI Database 26ai, APEX 26.1.4 and SQLcl 26.1.2 with Java 21. APEXLang source uses metadata version 26.1.0+3102. The existing original application was also confirmed available on APEX26.1.5 on September27,2026, with its five package specifications and bodies matching the distributed original sources. This read-only check is not a new installation or full browser certification. APEXLang tooling is an external prerequisite, not vendored here. Database DDL and PL/SQL can be read independently of that tooling.
 
 Use an isolated disposable APEX environment. The source targets workspace APEXFROMTHEFIELD, parsing schema APP_DEMO, alias B2B_FORENSICS and application ID 107. These are sample deployment identifiers, not access details for the author's environment. Check conflicts before adopting them. Adapting identifiers requires consistent changes across the SQL, APEXLang deployment configuration and contracts; do not overwrite an existing application.
 
@@ -43,6 +43,16 @@ The existing Built-in SQL Toolset can submit SQL and PL/SQL; the evidence accoun
 Query templates are under database/queries. Set every required bind before running them, using your new order IDs and a bounded incident window. Keep a maximum of 500 rows and seven days; limits on generic queries remain procedural. BF_INCIDENT_PKG clamps rows but does not enforce a seven-day maximum. No BLOBs are exposed. Diagnostic excerpts can be truncated, and duplicate_order_count includes the current order (1 is not a duplicate).
 
 Use an approval gate for tool calls, inspect effective identity, audit invocations and protect logs as sensitive data. Model-provider data policies, retention, prompt injection defenses, revocation and query-resource governance remain organization-specific responsibilities. No OAuth renewal or complete production hardening is claimed by this release.
+
+## Investigating an absent integration response
+
+Prepare a new control purchase under CLEAN and a separate purchase under PRE_INTEGRATION through the existing buyer portal. The selector is read when a new intention is assigned, so choose the mode before reviewing a new cart. Coordinate users while the global selector is changed and restore RANDOM immediately after assignment, including on failure. Keep historical purchases; do not rerun installation or reset an occupied laboratory.
+
+Record your own order numbers, explicit time window and source revision. Begin the investigator's context with the symptom and allowed read-only interfaces; keep this preparation guide and BF_LAB_PKG outside that initial context. Supply relevant source only when requested from evidence. The public source reveals the deliberate faults, so this is not a blind experiment.
+
+Use the health view and timeline templates in database/queries. Verify the filters and inspect positive validation/error evidence before interpreting a zero integration count. The missing-account branch is before simulated dispatch in BF_ORDER_PKG; correlate the actual incident's error/backtrace with the deployed source. A simulated dispatch event is not proof of receipt by a real external service.
+
+BF_LOG_PKG uses autonomous writes and suppresses logging exceptions. Missing records therefore cannot generally distinguish an unattempted operation from failed observation. Transport failure, retention, rollback and wrong filters require their own evidence; do not claim they were reproduced by this case. If the available evidence cannot distinguish explanations, preserve an inconclusive result.
 
 ## Known limitations
 

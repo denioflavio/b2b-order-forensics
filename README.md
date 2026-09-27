@@ -25,7 +25,7 @@ The application contains deliberate defects. It is not a production reference ar
 2. **One Click, Two Orders** — distinguish repeated purchase intention from merely similar successful orders.
 3. **The Missing Log Proves Nothing** — evaluate competing explanations when evidence is incomplete.
 
-The articles remain editorial work in progress and are not included in the source distribution. The second is being prepared with a separately tested idempotency correction; no timing benchmark or independent discovery is claimed.
+The first two articles are published: [The Incident Is the Prompt](https://apexfromthefield.com/?p=558) and [One Click, Two Orders](https://apexfromthefield.com/?p=572). The second includes a separately tested idempotency correction. The third is in preparation; no timing benchmark or independent discovery is claimed. Editorial material is not included in this source distribution.
 
 ## Installation and security
 
